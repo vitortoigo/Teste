@@ -16,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [ProductController::class, 'index']);
-Route::get('/create/product', [ProductController::class, 'create']);
-Route::post('/create', [ProductController::class, 'store']);
+Route::get('/create/product', [ProductController::class, 'create'])->middleware('auth');
+Route::get('/produto-detalhes/{id}', [ProductController::class, 'show']);
+Route::post('/create', [ProductController::class, 'store'])->middleware('auth');
 Route::post('/newsletter', [NewsletterController::class, 'newsletter']);
+Route::delete('/product/{id}', [ProductController::class, 'destroy']);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

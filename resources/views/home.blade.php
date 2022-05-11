@@ -28,7 +28,7 @@
 
 <div class="grid grid-cols-3 gap-5">
     @foreach ($products as $product)
-    <div class="flex overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <a href="/produto-detalhes/{{ $product->id }}" class="flex overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div class="w-1/3 bg-cover" style="background-image: url('/img/blogs/{{ $product->image }}')"></div>
         <div class="w-2/3 p-4 md:p-4 flex flex-col">
             <h1 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $product->name }}</h1>
@@ -38,7 +38,7 @@
                 <button class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-200 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Adicionar ao carrinho</button>
             </div>
         </div>
-    </div>
+    </a>
     @endforeach
 </div>
 

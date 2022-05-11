@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -41,7 +42,21 @@ class ProductController extends Controller
             $product->image = $imageName; // Seta o blog-image do banco de dados como image name (por conta do campo no BD ser um texto)
         }
 
+        $user = auth()->user();
+        $product->user_id = $user->id;
+
         $product->save();
         return redirect('/')->with('msg', 'Produto criado com sucesso!');
     }
-}
+
+    public function show($id) {
+        $product = Product::findOrFail($id);
+        $productOwner = User::where('id', $product->user_id)->first();
+        return view('produto-detalhes', ['product' => $product, 'productOwner' => $productOwner]);
+    }
+
+    public function destroy($id) {
+        Product::findOrFail($id)->delete();
+        return redirect('/dashboard')->with('msgDelete', 'Evento deletado com sucesso!');
+    }
+}   
